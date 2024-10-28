@@ -1,8 +1,7 @@
 # Recession_Forecast
 
 ### Dataset: 
-[Macroeconomic dataset from FRED St. Louis desiged by McCracken and Ng](https://research.stlouisfed.org/econ/mccracken/fred-databases/).
-Involves 129 macroeconomic monthly time series data from 1959 to 2024.
+[Macroeconomic dataset](https://research.stlouisfed.org/econ/mccracken/fred-databases/) from FRED St. Louis desiged by McCracken and Ng. It involves 129 macroeconomic monthly time series data from 1959 to 2024.
 8 Categories: Output and income, labor maket, housing, consumption, orders and inventories, money and credit, interest and exchange rate, prices in the stock market.
 
 ### NBER Recession Dates:
