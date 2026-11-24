@@ -1,0 +1,21 @@
+[project]
+name = "recession-forecast"
+version = "0.2.0"
+description = "Recession regime forecasting from FRED-MD with leak-free walk-forward evaluation"
+requires-python = ">=3.11"
+dependencies = [
+  "pandas>=2.2",
+  "numpy>=1.26",
+  "scikit-learn>=1.5",
+  "xgboost>=2.0",
+  "statsmodels>=0.14",
+  "matplotlib>=3.8",
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.ruff]
+line-length = 100
+# Original exploratory notebooks and helper are kept as-is for reference.
+extend-exclude = ["*.ipynb", "helper.py"]

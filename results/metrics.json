@@ -1,0 +1,64 @@
+{
+  "original_leaky_single_split": {
+    "l1_logit": {
+      "roc_auc": 0.9310756972111555,
+      "avg_precision": 0.6481668137122815,
+      "brier": 0.04747816009939311,
+      "n_months": 271,
+      "n_recession_months": 20
+    },
+    "xgboost": {
+      "roc_auc": 0.9587649402390438,
+      "avg_precision": 0.8181633651375401,
+      "brier": 0.0343487448990345,
+      "n_months": 271,
+      "n_recession_months": 20
+    }
+  },
+  "leak_free_single_split": {
+    "yield_curve_logit": {
+      "roc_auc": 0.7171314741035857,
+      "avg_precision": 0.14402644538075743,
+      "brier": 0.09733399619524466,
+      "n_months": 271,
+      "n_recession_months": 20
+    },
+    "l1_logit": {
+      "roc_auc": 0.9695219123505976,
+      "avg_precision": 0.6810205784572287,
+      "brier": 0.042801329193464084,
+      "n_months": 271,
+      "n_recession_months": 20
+    },
+    "xgboost": {
+      "roc_auc": 0.9468127490039842,
+      "avg_precision": 0.7148358110566956,
+      "brier": 0.042938172817230225,
+      "n_months": 271,
+      "n_recession_months": 20
+    }
+  },
+  "leak_free_walk_forward": {
+    "yield_curve_logit": {
+      "roc_auc": 0.7111553784860558,
+      "avg_precision": 0.14174515734264848,
+      "brier": 0.08523483312463154,
+      "n_months": 271,
+      "n_recession_months": 20
+    },
+    "l1_logit": {
+      "roc_auc": 0.952589641434263,
+      "avg_precision": 0.5679549381368677,
+      "brier": 0.04444822639123684,
+      "n_months": 271,
+      "n_recession_months": 20
+    },
+    "xgboost": {
+      "roc_auc": 0.943426294820717,
+      "avg_precision": 0.7680722863421499,
+      "brier": 0.033882174640893936,
+      "n_months": 271,
+      "n_recession_months": 20
+    }
+  }
+}
