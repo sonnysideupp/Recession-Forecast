@@ -1,5 +1,5 @@
 {
-  "original_leaky_single_split": {
+  "original_leaky_1m_single_split": {
     "l1_logit": {
       "roc_auc": 0.9310756972111555,
       "avg_precision": 0.6481668137122815,
@@ -15,50 +15,196 @@
       "n_recession_months": 20
     }
   },
-  "leak_free_single_split": {
-    "yield_curve_logit": {
-      "roc_auc": 0.7171314741035857,
-      "avg_precision": 0.14402644538075743,
-      "brier": 0.09733399619524466,
-      "n_months": 271,
-      "n_recession_months": 20
+  "1m": {
+    "single_split": {
+      "yield_curve_logit": {
+        "roc_auc": 0.7171314741035857,
+        "avg_precision": 0.14402644538075743,
+        "brier": 0.09733399619524466,
+        "n_months": 271,
+        "n_recession_months": 20
+      },
+      "l1_logit": {
+        "roc_auc": 0.9695219123505976,
+        "avg_precision": 0.6810205784572287,
+        "brier": 0.042801329193464084,
+        "n_months": 271,
+        "n_recession_months": 20
+      },
+      "xgboost": {
+        "roc_auc": 0.9468127490039842,
+        "avg_precision": 0.7148358110566956,
+        "brier": 0.042938172817230225,
+        "n_months": 271,
+        "n_recession_months": 20
+      }
     },
-    "l1_logit": {
-      "roc_auc": 0.9695219123505976,
-      "avg_precision": 0.6810205784572287,
-      "brier": 0.042801329193464084,
-      "n_months": 271,
-      "n_recession_months": 20
-    },
-    "xgboost": {
-      "roc_auc": 0.9468127490039842,
-      "avg_precision": 0.7148358110566956,
-      "brier": 0.042938172817230225,
-      "n_months": 271,
-      "n_recession_months": 20
+    "walk_forward": {
+      "yield_curve_logit": {
+        "roc_auc": 0.7111553784860558,
+        "avg_precision": 0.14174515734264848,
+        "brier": 0.08523483312463154,
+        "n_months": 271,
+        "n_recession_months": 20
+      },
+      "l1_logit": {
+        "roc_auc": 0.952589641434263,
+        "avg_precision": 0.5679549381368677,
+        "brier": 0.04444825775651773,
+        "n_months": 271,
+        "n_recession_months": 20
+      },
+      "xgboost": {
+        "roc_auc": 0.9450199203187251,
+        "avg_precision": 0.7811629524404828,
+        "brier": 0.033136997371912,
+        "n_months": 271,
+        "n_recession_months": 20
+      }
     }
   },
-  "leak_free_walk_forward": {
-    "yield_curve_logit": {
-      "roc_auc": 0.7111553784860558,
-      "avg_precision": 0.14174515734264848,
-      "brier": 0.08523483312463154,
-      "n_months": 271,
-      "n_recession_months": 20
+  "3m": {
+    "single_split": {
+      "yield_curve_logit": {
+        "roc_auc": 0.6893574297188755,
+        "avg_precision": 0.12820866494081884,
+        "brier": 0.10404344207084294,
+        "n_months": 269,
+        "n_recession_months": 20
+      },
+      "l1_logit": {
+        "roc_auc": 0.9226907630522089,
+        "avg_precision": 0.48078259296710446,
+        "brier": 0.05798717100545736,
+        "n_months": 269,
+        "n_recession_months": 20
+      },
+      "xgboost": {
+        "roc_auc": 0.9178714859437751,
+        "avg_precision": 0.6705544943893328,
+        "brier": 0.05287997052073479,
+        "n_months": 269,
+        "n_recession_months": 20
+      }
     },
-    "l1_logit": {
-      "roc_auc": 0.952589641434263,
-      "avg_precision": 0.5679549381368677,
-      "brier": 0.04444822639123684,
-      "n_months": 271,
-      "n_recession_months": 20
+    "walk_forward": {
+      "yield_curve_logit": {
+        "roc_auc": 0.6588353413654618,
+        "avg_precision": 0.12054522451148117,
+        "brier": 0.0923972029891053,
+        "n_months": 269,
+        "n_recession_months": 20
+      },
+      "l1_logit": {
+        "roc_auc": 0.8636546184738956,
+        "avg_precision": 0.3797509044380525,
+        "brier": 0.06354351569308217,
+        "n_months": 269,
+        "n_recession_months": 20
+      },
+      "xgboost": {
+        "roc_auc": 0.8166666666666667,
+        "avg_precision": 0.5052627228579494,
+        "brier": 0.05716075003147125,
+        "n_months": 269,
+        "n_recession_months": 20
+      }
+    }
+  },
+  "6m": {
+    "single_split": {
+      "yield_curve_logit": {
+        "roc_auc": 0.683130081300813,
+        "avg_precision": 0.1285543656060808,
+        "brier": 0.10575926218276363,
+        "n_months": 266,
+        "n_recession_months": 20
+      },
+      "l1_logit": {
+        "roc_auc": 0.8668699186991871,
+        "avg_precision": 0.3608443840392724,
+        "brier": 0.0625824316270044,
+        "n_months": 266,
+        "n_recession_months": 20
+      },
+      "xgboost": {
+        "roc_auc": 0.8414634146341463,
+        "avg_precision": 0.23217503274720117,
+        "brier": 0.07497856020927429,
+        "n_months": 266,
+        "n_recession_months": 20
+      }
     },
-    "xgboost": {
-      "roc_auc": 0.943426294820717,
-      "avg_precision": 0.7680722863421499,
-      "brier": 0.033882174640893936,
-      "n_months": 271,
-      "n_recession_months": 20
+    "walk_forward": {
+      "yield_curve_logit": {
+        "roc_auc": 0.631910569105691,
+        "avg_precision": 0.11610230700499716,
+        "brier": 0.09572792435641364,
+        "n_months": 266,
+        "n_recession_months": 20
+      },
+      "l1_logit": {
+        "roc_auc": 0.8447154471544716,
+        "avg_precision": 0.25486690881816393,
+        "brier": 0.07230225961981981,
+        "n_months": 266,
+        "n_recession_months": 20
+      },
+      "xgboost": {
+        "roc_auc": 0.7146341463414634,
+        "avg_precision": 0.2633988995592304,
+        "brier": 0.0684349536895752,
+        "n_months": 266,
+        "n_recession_months": 20
+      }
+    }
+  },
+  "12m": {
+    "single_split": {
+      "yield_curve_logit": {
+        "roc_auc": 0.7733333333333333,
+        "avg_precision": 0.2007773433506616,
+        "brier": 0.08143320179391406,
+        "n_months": 260,
+        "n_recession_months": 20
+      },
+      "l1_logit": {
+        "roc_auc": 0.653125,
+        "avg_precision": 0.10328592032792437,
+        "brier": 0.31755075891512213,
+        "n_months": 260,
+        "n_recession_months": 20
+      },
+      "xgboost": {
+        "roc_auc": 0.834375,
+        "avg_precision": 0.3646190500064331,
+        "brier": 0.06330721825361252,
+        "n_months": 260,
+        "n_recession_months": 20
+      }
+    },
+    "walk_forward": {
+      "yield_curve_logit": {
+        "roc_auc": 0.765625,
+        "avg_precision": 0.19062863662298155,
+        "brier": 0.08030445642743309,
+        "n_months": 260,
+        "n_recession_months": 20
+      },
+      "l1_logit": {
+        "roc_auc": 0.628125,
+        "avg_precision": 0.16875268241247832,
+        "brier": 0.07633370300285652,
+        "n_months": 260,
+        "n_recession_months": 20
+      },
+      "xgboost": {
+        "roc_auc": 0.7439583333333333,
+        "avg_precision": 0.21469236928975488,
+        "brier": 0.07383173704147339,
+        "n_months": 260,
+        "n_recession_months": 20
+      }
     }
   }
 }

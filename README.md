@@ -1,39 +1,40 @@
 # Recession_Forecast
 
-Forecasting next month's US recession regime (NBER) from 129 FRED-MD macroeconomic series with regularized logistic regression and XGBoost.
+Forecasting US recessions (NBER) 1 to 12 months ahead from 129 FRED-MD macroeconomic series with regularized logistic regression and XGBoost.
 
-## Leak-free evaluation (update)
+## Leak-free, multi-horizon evaluation (update)
 
-The original notebooks fit the stationarity tests, the scaler and the L1 feature selection on the **whole 1959–2024 sample** before splitting into training (1960–2001) and validation (2002–2024). Feature selection uses the labels, so it could see the validation recessions. This update rebuilds the evaluation so nothing is learned from data after the forecast date, and measures how much the leakage mattered.
+The original notebooks fit the stationarity tests, the scaler and the L1 feature selection on the **whole 1959–2024 sample** before splitting into training (1960–2001) and validation (2002–2024), and only forecast one month ahead. This update rebuilds the evaluation so nothing is learned from data after the forecast date, measures how much the leakage mattered, and forecasts 1, 3, 6 and 12 months ahead.
 
 **What changed** (`recession/`, `run_evaluation.py`):
 - Stationarity (ADF) decisions use the training window only.
 - Scaling and L1 feature selection are steps inside a scikit-learn `Pipeline`, so they are re-fit on the training data of every CV fold and refit.
 - Hyperparameters are chosen by `TimeSeriesSplit` CV inside the training window.
-- **Walk-forward evaluation:** refit every January on all earlier months, then forecast that year (2002–2024).
-- **Benchmark:** a logistic model on the 10-year minus 3-month Treasury spread (the classic yield-curve recession signal).
-- `tests/test_no_leakage.py` checks that features for month *t* do not change when later data changes, and that differencing decisions ignore post-training data.
+- **Walk-forward evaluation:** refit every January (2002–2024) and forecast that year.
+- **Horizon-aware training cutoff:** at an h-month horizon, a training row's label is the regime h months later, so each refit only trains on rows whose outcome had already happened by the forecast date.
+- **Benchmark:** logistic regression on the 10-year minus 3-month Treasury spread (the classic yield-curve recession signal).
+- `tests/test_no_leakage.py` checks that features for month *t* ignore later data, that differencing decisions ignore post-training data, and that training never uses an unobserved label. All seeds are fixed; runs are reproducible.
 
-**Results, 2002–2024** (271 months, 20 of them followed by a recession month):
+**Walk-forward results, 2002–2024** (about 265 forecasts per horizon; 20 recession months, from 2 recessions):
 
-| Evaluation | Model | ROC AUC | Avg. precision | Brier |
-|---|---|---|---|---|
-| Original (leaky), single split | L1 logit | 0.931 | 0.648 | 0.047 |
-| Original (leaky), single split | XGBoost | 0.959 | 0.818 | 0.034 |
-| Leak-free, single split | Yield-curve logit | 0.717 | 0.144 | 0.097 |
-| Leak-free, single split | L1 logit | 0.970 | 0.681 | 0.043 |
-| Leak-free, single split | XGBoost | 0.947 | 0.715 | 0.043 |
-| Leak-free, walk-forward | Yield-curve logit | 0.711 | 0.142 | 0.085 |
-| Leak-free, walk-forward | L1 logit | 0.953 | 0.568 | 0.044 |
-| Leak-free, walk-forward | XGBoost | 0.943 | 0.768 | 0.034 |
+| Horizon | Yield-curve logit AUC | L1 logit AUC | XGBoost AUC |
+|---|---|---|---|
+| 1 month | 0.71 | **0.95** | 0.95 |
+| 3 months | 0.66 | **0.86** | 0.82 |
+| 6 months | 0.63 | **0.85** | 0.72 |
+| 12 months | **0.77** | 0.63 | 0.74 |
+
+Average precision, Brier scores and single-split results are in `results/metrics.json`.
+
+**Effect of the leakage** (1-month horizon, single split, same years): the original protocol gives AUC 0.93 (L1 logit) and 0.96 (XGBoost); the leak-free version gives 0.97 and 0.95. The leakage barely mattered here. The "XGBoost AUC 1.0" printed in `Forecasting.ipynb` was a bug: it printed a stale `auc` variable from an earlier cell.
 
 **What I learned**
-- **The leakage barely mattered here.** Removing it moves AUC by about ±0.02; with only 20 recession months, that is within noise.
-- **The "XGBoost AUC 1.0" printed in `Forecasting.ipynb` was a bug**, not a result: it printed a stale `auc` variable from an earlier cell. The real validation AUC is about 0.95.
-- **High AUC here mostly means nowcasting, not forecasting.** Recessions last many months, so "next month's regime" is largely "is the economy in a recession now". The walk-forward plot shows the ML models jump once a recession has started, while the yield curve rises one to two years ahead (and false-alarms in 2023–24). A longer horizon (6–12 months) is the honest test of forecasting skill.
+- **Short horizons are mostly nowcasting.** Recessions last many months, so "next month's regime" is largely "is the economy in a recession now". The ML models jump once a recession has started.
+- **Skill decays with horizon, and at 12 months the 129-series models no longer beat the yield curve.** The yield curve rises one to two years ahead of 2008 and 2020, but it also false-alarmed in 2023–24.
+- **Small sample:** the test period holds only two recessions, one of them the COVID shock, so differences of a few AUC points are noise. AUC (threshold-free ranking quality) is reported alongside average precision and Brier score because accuracy is misleading when 93% of months are not recessions.
 - **Remaining caveats:** FRED-MD is a revised (not real-time) vintage, and NBER announces recession dates months after the fact, so a real-time system would know less than these backtests assume.
 
-![Walk-forward forecasts](results/walk_forward.png)
+![Walk-forward forecasts by horizon](results/walk_forward.png)
 
 **Reproduce:** `uv sync && uv run pytest && uv run python run_evaluation.py`
 

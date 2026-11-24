@@ -5,6 +5,7 @@ import pandas as pd
 import pytest
 
 from recession.data import build_features, decide_differencing, load_raw
+from recession.evaluate import known_label_mask
 from recession.models import make_model
 
 FIT_END = pd.Timestamp("2001-12-01")
@@ -37,10 +38,22 @@ def test_features_at_t_do_not_use_later_rows(raw):
     pd.testing.assert_series_equal(X.loc[t], X2.loc[t])
 
 
-def test_target_is_next_month_regime(raw):
-    _, y = build_features(raw, FIT_END)
+@pytest.mark.parametrize("horizon", [1, 3, 12])
+def test_target_is_regime_horizon_months_ahead(raw, horizon):
+    _, y = build_features(raw, FIT_END, horizon)
     t = y.index[100]
-    assert y.loc[t] == raw["recession"].shift(-1).loc[t]
+    assert y.loc[t] == raw["recession"].loc[t + pd.DateOffset(months=horizon)]
+
+
+@pytest.mark.parametrize("horizon", [1, 3, 6, 12])
+def test_training_uses_only_labels_known_at_forecast_origin(horizon):
+    index = pd.date_range("2000-01-01", "2003-12-01", freq="MS")
+    origin = pd.Timestamp("2002-01-01")
+    mask = known_label_mask(index, origin, horizon)
+    label_months = index[mask] + pd.DateOffset(months=horizon)
+    assert label_months.max() <= origin
+    # and nothing usable is thrown away
+    assert (index[~mask] + pd.DateOffset(months=horizon) > origin).all()
 
 
 def test_preprocessing_lives_inside_the_model():

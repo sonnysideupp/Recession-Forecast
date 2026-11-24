@@ -16,7 +16,9 @@ INNER_SPLITS = 3
 
 
 def _l1_selector(c: float = 0.1) -> SelectFromModel:
-    return SelectFromModel(LogisticRegression(l1_ratio=1, solver="liblinear", C=c, max_iter=10_000))
+    return SelectFromModel(
+        LogisticRegression(l1_ratio=1, solver="liblinear", C=c, max_iter=10_000, random_state=SEED)
+    )
 
 
 def _search(pipeline: Pipeline, grid: dict) -> GridSearchCV:
